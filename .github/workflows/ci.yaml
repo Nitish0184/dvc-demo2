@@ -19,16 +19,13 @@ jobs:
         run: |
           pip install -r requirement.txt
           pip install --upgrade pip setuptools
-          pip install cloud-ml-sdk 
-
-
-
-      
+          pip install cloud-ml-sdk  # Install cloud-ml-sdk if it's not included in requirement.txt
 
       - name: Create reports
         env:
           REPO_TOKEN: ${{ secrets.GIT_SECRET }}
         run: |
           echo "# first line of reports" >> report.md
-          
-           comment Create report.md
+          cml comment create report.md  # Assuming cml is correctly set up and authenticated
+
+      
