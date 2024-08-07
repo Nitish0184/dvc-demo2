@@ -12,6 +12,8 @@ jobs:
 
       - name: Set up Python
         uses: actions/setup-python@v2
+      - name: setup cml  
+        uses: iterative/setup-cml@v2 1 
         with:
           python-version: '3.11'
 
