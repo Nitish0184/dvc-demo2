@@ -24,8 +24,14 @@ jobs:
        
        pip install requirements.txt
 
-   - name: run pipelines 
+   - name: create reports
+     
+     env:
+       
+       REPO_TOKEN: ${{secrets.GIT_SECRET}}
 
      run: |
        
-       dvc repro
+       echo "# first line of reports" >> report.md
+
+       cml comment create report.md  
