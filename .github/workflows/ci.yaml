@@ -1,42 +1,32 @@
-name: CI Pipeline
+name: ci-pipeline
 
-on:
-  push:
+on: push
 
 jobs:
-  build:
+  project-testing:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
-      with:
-        python-version: 3.11
-    - uses: iterative/setup-cml@v2
-    
-    - name: Install Dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-    
-    - name: Run main file
-      run: |
-        python main.py
-    
-    - name: Run Tests
-      run: |
-        python -m unittest discover
-        cml --version
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Create CML report
-      env:
-        REPO_TOKEN: ${{ secrets.GIT_SECRET }}
-      run: |
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
 
-        echo "# First Line of our report" >> report.md
-        echo "## Bar Plots" >> report.md
-        echo '![](./bars.png "Bar plot")' >> report.md
-        echo "## Line Plots" >> report.md
-        echo '![](./lines.png "Bar plot")' >> report.md
+      - name: Install dependencies
+        run: |
+          pip install -r requirement.txt
 
-        cml comment create report.md 
+      - name: Run Tests
+        run: |
+          python -m unittest discover
+          cml --version    
+
+      - name: Create reports
+        env:
+          REPO_TOKEN: ${{ secrets.GIT_SECRET }}
+        run: |
+          echo "# first line of reports" >> report.md
+          cml comment create report.md 
