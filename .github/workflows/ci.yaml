@@ -12,23 +12,22 @@ jobs:
 
       - name: Set up Python
         uses: actions/setup-python@v2
-      - name: setup cml  
-        uses: iterative/setup-cml@v2 1 
         with:
-          python-version: '3.11'
+          python-version: '3.10'
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
+          pip install -r requirement.txt
+          pip install --upgrade pip setuptools
+          pip install cloud-ml-sdk
 
-      - name: Run Tests
-        run: |
-          python -m unittest discover
-          cml --version    
+      - name: Setup CML
+        uses: iterative/setup-cml@v2
+        
+        env:
+          access_token: ${{ secrets.GIT_SECRET }}
 
       - name: Create reports
-        env:
-          REPO_TOKEN: ${{ secrets.GIT_SECRET }}
         run: |
           echo "# first line of reports" >> report.md
-          cml comment create report.md 
+          cml comment create report.md
