@@ -19,14 +19,12 @@ jobs:
         run: |
           pip install -r requirements.txt
           pip install --upgrade pip setuptools
-          
 
       - name: Setup CML
         uses: iterative/setup-cml@v2
-        env:
-          access_token: ${{ secrets.GIT_SECRET }}
 
       - name: Create reports
+        
         run: |
           echo "# first line of reports" >> report.md
-          cml comment create report.md
+          cml comment create report.md --token ${{ secrets.GIT.SECRET}}  # Reference the secret
