@@ -23,8 +23,7 @@ jobs:
 
       - name: Setup CML
         uses: iterative/setup-cml@v2
-        with:
-          repository: ${{ github.repository }}
+        env:
           access_token: ${{ secrets.GIT_SECRET }}
 
       - name: Create reports
